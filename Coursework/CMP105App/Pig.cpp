@@ -159,7 +159,7 @@ void Pig::update(float dt)
 	m_currentAnimation->animate(dt);
     setTextureRect(m_currentAnimation->getCurrentFrame());
 
-    // Bouncey Pigs
+    // Bouncy Pigs
     sf::Vector2f pos = getPosition();
 	if ((pos.x < 0 && m_velocity.x < 0) || (pos.x + getSize().x > m_worldSize.x && m_velocity.x > 0))
 	{
