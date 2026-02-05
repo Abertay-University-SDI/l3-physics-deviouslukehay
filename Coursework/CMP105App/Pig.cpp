@@ -30,10 +30,13 @@ Pig::Pig(sf::Vector2f worldSize)
 	m_walkDownRight.setLooping(true);
 	m_walkDownRight.setFrameSpeed(0.1f);
 
-    m_worldSize = worldSize;
-
 	m_currentAnimation = &m_walkDown;
 	setTextureRect(m_currentAnimation->getCurrentFrame());
+
+	m_worldSize = worldSize;
+
+	sf::FloatRect collider ({ 4,4 },{ 56,56 });
+	setCollisionBox(collider);
 }
 
 Pig::~Pig()
@@ -207,4 +210,8 @@ void Pig::update(float dt)
 		}
 	}
 	
+}
+
+void Pig::collisionResponse(GameObject& collider) {
+	std::cout << "SMASHED INTO THE SHEEP OH MY GOD" << std::endl;
 }

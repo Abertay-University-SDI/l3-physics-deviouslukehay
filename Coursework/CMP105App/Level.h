@@ -2,6 +2,7 @@
 
 #include "Framework/BaseLevel.h"
 #include "Framework/GameObject.h"
+#include "Framework/Collision.h"
 #include "Pig.h"
 #include "Sheep.h"
 
@@ -16,9 +17,13 @@ public:
 
 private:
 	// Default functions for rendering to the screen.
+	const float SHAKE_TIME = .3f;
+
 
 	// Default variables for level class.
 	bool m_gameOver;
+	float m_shakeTimer;
+
 
 	sf::Texture m_backgroundTexture;
 	GameObject m_background;

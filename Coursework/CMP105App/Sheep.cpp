@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Sheep.h"
 
 Sheep::Sheep()
@@ -32,6 +33,9 @@ Sheep::Sheep()
 
 	m_currentAnimation = &m_walkDown;
 	setTextureRect(m_currentAnimation->getCurrentFrame());
+
+	sf::FloatRect collider({ 4,4 }, { 56,56 });
+	setCollisionBox(collider);
 }
 
 Sheep::~Sheep()
@@ -74,3 +78,6 @@ void Sheep::checkWallAndBounce() {
 
 }
 
+void Sheep::collisionResponse(GameObject& collider) {
+	collider.setVelocity(getVelocity() * -1.f * COEFF_OF_RESTITUTION);
+}

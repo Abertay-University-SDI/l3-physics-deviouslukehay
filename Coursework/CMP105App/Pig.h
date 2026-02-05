@@ -2,7 +2,8 @@
 #include "Framework/GameObject.h"
 #include "Framework/Animation.h"
 
-class Pig : public GameObject
+class Pig :
+	public GameObject
 {
 public:
 
@@ -11,6 +12,7 @@ public:
 
 	void update(float dt) override;
 	void setRandomDirection();
+	void collisionResponse(GameObject& collider) override;
 
 private:
 	// direction used for flipping animation on top/bottom

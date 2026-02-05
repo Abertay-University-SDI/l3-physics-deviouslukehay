@@ -1,7 +1,7 @@
 #pragma once
-#include <iostream>
 #include "Framework/GameObject.h"
 #include "Framework/Animation.h"
+#include "Framework/Collision.h"
 
 class Sheep :
 	public GameObject
@@ -15,10 +15,11 @@ public:
 	void update(float dt) override;
 	void setWorldSize(sf::Vector2f worldSize) { m_worldSize = worldSize;  };
 	void checkWallAndBounce();
+	void collisionResponse(GameObject& collider) override;
 
 private:
 	const float ACCELERATION = 90.0f;   // rate of acceleration, suggested range 10-500
-	const float DRAG_FACTOR = 0.9f;    // friction, suggest range 0.7-0.99
+	const float DRAG_FACTOR = 0.95f;    // friction, suggest range 0.7-0.99
 	const float COEFF_OF_RESTITUTION = .8f;
 	sf::Vector2f m_acceleration;
 	sf::Vector2f m_worldSize; 

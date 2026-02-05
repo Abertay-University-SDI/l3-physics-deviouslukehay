@@ -18,6 +18,7 @@ Level::Level(sf::RenderWindow& hwnd, Input& in) :
 	m_sheep.setPosition({ background_size / 2.f, background_size / 2.f });
 	m_sheep.setSize({ 64,64 });
 	m_sheep.setWorldSize({ background_size, background_size });
+	m_sheep.setOrigin({ 32,32 });
 
 	// Setup pigs.
 	std::vector<sf::Vector2f> pig_locations = {	// top corners and bottom middle
@@ -32,7 +33,8 @@ Level::Level(sf::RenderWindow& hwnd, Input& in) :
 		Pig* new_pig = new Pig({ background_size, background_size });
 		new_pig->setTexture(&m_pigTexture);
 		new_pig->setSize({ 64, 64 });
-		new_pig->setPosition(pig_locations[i]);	
+		new_pig->setPosition(pig_locations[i]);
+		new_pig->setOrigin({ 32,32 });
 		m_pigPointers.push_back(new_pig);
 	}
 	
@@ -68,8 +70,24 @@ void Level::update(float dt)
 	view.setCenter(pos);
 	m_window.setView(view);
 
+	if (m_shakeTimer > 0) {
+
+		m_shakeTimer -= dt;
+		pos.x += (rand() % 10) - 5.f;
+		pos.y += (rand() % 10) - 5.f;
+		view.setCenter(pos);
+	}
+
 	m_sheep.update(dt);
-	for (auto pig : m_pigPointers) pig->update(dt);
+	for (auto pig : m_pigPointers) {
+		pig->update(dt);
+		if (Collision::checkBoundingBox(m_sheep, *pig)) {
+			pig->collisionResponse(*pig);
+			m_sheep.collisionResponse(m_sheep);
+			m_shakeTimer = SHAKE_TIME;
+		}
+	}
+
 }
 
 // Render level
